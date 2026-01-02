@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-arctic-navy: #030B18;
+  --color-midnight-blue: #0F2C4D;
+  --color-infrastructure-blue: #3D6685;
+  --color-iceshield-blue: #74A4BC;
+  --color-frost-blue: #B8D4E2;
+  --color-snow-white: #FDFDFD;
+  --color-black: #000;
+  --color-white: #fff;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-arctic-navy text-snow-white font-sans;
+    line-height: 1.6;
+  }
+
+  h1 {
+    @apply font-bold;
+  }
+
+  h2 {
+    @apply font-bold;
+  }
+
+  h3 {
+    @apply font-bold;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  a {
+    @apply text-iceshield-blue transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-frost-blue;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-16 lg:py-24;
+  }
+
+  .section-header {
+    @apply text-center max-w-3xl mx-auto mb-12 lg:mb-16 space-y-4;
+  }
+}
+
