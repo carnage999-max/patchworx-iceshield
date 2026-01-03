@@ -1,3 +1,24 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | Patchworx",
+  description: "Terms of service governing use of Patchworx website, IceShield® product information, and pilot program participation.",
+  keywords: ["terms of service", "legal", "conditions", "usage terms"],
+  openGraph: {
+    title: "Terms of Service | Patchworx",
+    description: "Patchworx terms of service for website and product use.",
+    images: [
+      {
+        url: "https://patchworx-ice.com/patchworx-ice-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Terms of Service",
+      },
+    ],
+  },
+};
+
 export default function Terms() {
   return (
     <main>

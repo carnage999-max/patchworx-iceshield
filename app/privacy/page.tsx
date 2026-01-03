@@ -1,3 +1,24 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Patchworx",
+  description: "Privacy policy outlining how Patchworx collects, uses, and protects your personal information in compliance with GDPR, CCPA, and international regulations.",
+  keywords: ["privacy policy", "data protection", "GDPR", "CCPA", "privacy"],
+  openGraph: {
+    title: "Privacy Policy | Patchworx",
+    description: "Patchworx privacy policy and data protection practices.",
+    images: [
+      {
+        url: "https://patchworx-ice.com/patchworx-ice-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Privacy Policy",
+      },
+    ],
+  },
+};
+
 export default function Privacy() {
   return (
     <main>

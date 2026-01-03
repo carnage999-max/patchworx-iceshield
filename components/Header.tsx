@@ -3,47 +3,75 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setMenuOpen(false);
+    }
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-arctic-navy border-b border-midnight-blue">
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+    <header className="sticky top-0 z-50 bg-snow-white/95 backdrop-blur-sm border-b border-frost-blue/20">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8 py-3 flex items-center justify-between">
+        {/* Logo - All Devices */}
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Image
             src="/patchworx-ice-logo.png"
-            alt="Patchworx IceShield Logo"
-            width={40}
-            height={40}
-            className="w-10 h-10 rounded-lg"
+            alt="Patchworx IceShield"
+            width={44}
+            height={44}
+            className="w-11 h-11 rounded-2xl"
           />
-          <span className="text-2xl font-bold text-iceshield-blue">IceShield®</span>
+          <span className="hidden md:inline text-2xl font-bold text-arctic-navy">IceShield®</span>
         </Link>
+
+        {/* Mobile Centered Site Name */}
+        <span className="md:hidden flex-1 text-center text-lg font-bold text-arctic-navy">IceShield®</span>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8 items-center">
-          <Link href="/" className="text-snow-white hover:text-iceshield-blue transition-colors">
-            Home
-          </Link>
-          <Link href="/how-it-works" className="text-snow-white hover:text-iceshield-blue transition-colors">
-            How It Works
-          </Link>
-          <Link href="/safety-cost" className="text-snow-white hover:text-iceshield-blue transition-colors">
-            Safety & Cost
-          </Link>
-          <Link href="/pilot-program" className="text-snow-white hover:text-iceshield-blue transition-colors">
-            Pilot Program
-          </Link>
-          <Link href="/about" className="text-snow-white hover:text-iceshield-blue transition-colors">
-            About Patchworx
-          </Link>
+          {isHomePage ? (
+            <>
+              <a href="#problem" onClick={(e) => handleSmoothScroll(e, "problem")} className="text-arctic-navy hover:text-iceshield-blue transition-colors cursor-pointer">
+                The Problem
+              </a>
+              <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, "how-it-works")} className="text-arctic-navy hover:text-iceshield-blue transition-colors cursor-pointer">
+                How It Works
+              </a>
+              <a href="#safety" onClick={(e) => handleSmoothScroll(e, "safety")} className="text-arctic-navy hover:text-iceshield-blue transition-colors cursor-pointer">
+                Safety
+              </a>
+              <a href="#pilot" onClick={(e) => handleSmoothScroll(e, "pilot")} className="text-arctic-navy hover:text-iceshield-blue transition-colors cursor-pointer">
+                Pilot Program
+              </a>
+            </>
+          ) : (
+            <>
+              <Link href="/" className="text-arctic-navy hover:text-iceshield-blue transition-colors">
+                Home
+              </Link>
+              <Link href="/#how-it-works" className="text-arctic-navy hover:text-iceshield-blue transition-colors">
+                How It Works
+              </Link>
+              <Link href="/#pilot" className="text-arctic-navy hover:text-iceshield-blue transition-colors">
+                Pilot Program
+              </Link>
+            </>
+          )}
 
           {/* CTA Button */}
           <Link
             href="/contact"
-            className="bg-iceshield-blue text-arctic-navy px-6 py-2 rounded transition-all duration-200 hover:bg-frost-blue font-semibold"
+            className="bg-iceshield-blue text-white px-6 py-2 rounded-xl transition-all duration-200 hover:shadow-lg font-semibold"
           >
             Request a Pilot
           </Link>
@@ -51,57 +79,52 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-iceshield-blue hover:text-frost-blue"
+          className="md:hidden text-arctic-navy hover:text-iceshield-blue transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          <div className="w-6 h-5 flex flex-col justify-between">
+            <span className={`h-0.5 w-full bg-current transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2.5' : ''}`}></span>
+            <span className={`h-0.5 w-full bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`h-0.5 w-full bg-current transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2.5' : ''}`}></span>
+          </div>
         </button>
       </nav>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-midnight-blue px-6 py-4 space-y-4">
-          <Link
-            href="/"
-            className="block text-snow-white hover:text-iceshield-blue transition-colors"
-            onClick={() => setMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/how-it-works"
-            className="block text-snow-white hover:text-iceshield-blue transition-colors"
-            onClick={() => setMenuOpen(false)}
-          >
-            How It Works
-          </Link>
-          <Link
-            href="/safety-cost"
-            className="block text-snow-white hover:text-iceshield-blue transition-colors"
-            onClick={() => setMenuOpen(false)}
-          >
-            Safety & Cost
-          </Link>
-          <Link
-            href="/pilot-program"
-            className="block text-snow-white hover:text-iceshield-blue transition-colors"
-            onClick={() => setMenuOpen(false)}
-          >
-            Pilot Program
-          </Link>
-          <Link
-            href="/about"
-            className="block text-snow-white hover:text-iceshield-blue transition-colors"
-            onClick={() => setMenuOpen(false)}
-          >
-            About Patchworx
-          </Link>
+        <div className="md:hidden bg-frost-blue/5 border-t border-frost-blue/20 px-6 py-4 space-y-4">
+          {isHomePage ? (
+            <>
+              <a href="#problem" onClick={(e) => handleSmoothScroll(e, "problem")} className="block text-arctic-navy hover:text-iceshield-blue transition-colors">
+                The Problem
+              </a>
+              <a href="#how-it-works" onClick={(e) => handleSmoothScroll(e, "how-it-works")} className="block text-arctic-navy hover:text-iceshield-blue transition-colors">
+                How It Works
+              </a>
+              <a href="#safety" onClick={(e) => handleSmoothScroll(e, "safety")} className="block text-arctic-navy hover:text-iceshield-blue transition-colors">
+                Safety
+              </a>
+              <a href="#pilot" onClick={(e) => handleSmoothScroll(e, "pilot")} className="block text-arctic-navy hover:text-iceshield-blue transition-colors">
+                Pilot Program
+              </a>
+            </>
+          ) : (
+            <>
+              <Link href="/" className="block text-arctic-navy hover:text-iceshield-blue transition-colors" onClick={() => setMenuOpen(false)}>
+                Home
+              </Link>
+              <Link href="/#how-it-works" className="block text-arctic-navy hover:text-iceshield-blue transition-colors" onClick={() => setMenuOpen(false)}>
+                How It Works
+              </Link>
+              <Link href="/#pilot" className="block text-arctic-navy hover:text-iceshield-blue transition-colors" onClick={() => setMenuOpen(false)}>
+                Pilot Program
+              </Link>
+            </>
+          )}
           <Link
             href="/contact"
-            className="block w-full bg-iceshield-blue text-arctic-navy px-6 py-2 rounded text-center font-semibold hover:bg-frost-blue transition-colors"
+            className="block w-full bg-iceshield-blue text-white px-6 py-2 rounded-xl text-center font-semibold hover:shadow-lg transition-all"
             onClick={() => setMenuOpen(false)}
           >
             Request a Pilot

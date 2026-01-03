@@ -10,13 +10,15 @@
   --color-black: #000;
   --color-white: #fff;
 
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", monospace;
 }
 
 @layer base {
   body {
-    @apply bg-arctic-navy text-snow-white font-sans;
+    background: var(--color-arctic-navy);
+    color: var(--color-snow-white);
+    font-family: var(--font-sans);
     line-height: 1.6;
   }
 
@@ -68,8 +70,250 @@
     @apply py-16 lg:py-24;
   }
 
+  /* Dark-background sections should use light text */
+  .bg-arctic-navy,
+  .bg-midnight-blue {
+    color: var(--color-snow-white);
+  }
+
   .section-header {
     @apply text-center max-w-3xl mx-auto mb-12 lg:mb-16 space-y-4;
   }
+
+  /* Scroll animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .fade-in-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .fade-in-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .fade-in-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  /* Snowfall animation */
+  @keyframes snowfall {
+    0% {
+      transform: translateY(-10vh) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh) translateX(20px);
+      opacity: 0;
+    }
+  }
+
+  .snowflake {
+    position: absolute;
+    top: -10vh;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1em;
+    animation: snowfall linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .snowflake:nth-child(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 0.8em; }
+  .snowflake:nth-child(2) { left: 15%; animation-duration: 15s; animation-delay: 2s; font-size: 1.2em; }
+  .snowflake:nth-child(3) { left: 25%; animation-duration: 10s; animation-delay: 4s; font-size: 0.6em; }
+  .snowflake:nth-child(4) { left: 35%; animation-duration: 18s; animation-delay: 1s; font-size: 1em; }
+  .snowflake:nth-child(5) { left: 45%; animation-duration: 14s; animation-delay: 3s; font-size: 0.9em; }
+  .snowflake:nth-child(6) { left: 55%; animation-duration: 16s; animation-delay: 5s; font-size: 1.1em; }
+  .snowflake:nth-child(7) { left: 65%; animation-duration: 11s; animation-delay: 0.5s; font-size: 0.7em; }
+  .snowflake:nth-child(8) { left: 75%; animation-duration: 13s; animation-delay: 2.5s; font-size: 1em; }
+  .snowflake:nth-child(9) { left: 85%; animation-duration: 17s; animation-delay: 4.5s; font-size: 0.8em; }
+  .snowflake:nth-child(10) { left: 95%; animation-duration: 12s; animation-delay: 1.5s; font-size: 1.2em; }
+  .snowflake:nth-child(11) { left: 10%; animation-duration: 14s; animation-delay: 3.5s; font-size: 0.9em; }
+  .snowflake:nth-child(12) { left: 30%; animation-duration: 15s; animation-delay: 0.8s; font-size: 0.7em; }
+  .snowflake:nth-child(13) { left: 50%; animation-duration: 13s; animation-delay: 2.8s; font-size: 1.1em; }
+  .snowflake:nth-child(14) { left: 70%; animation-duration: 16s; animation-delay: 4.2s; font-size: 0.8em; }
+  .snowflake:nth-child(15) { left: 90%; animation-duration: 11s; animation-delay: 1.2s; font-size: 1em; }
+
+  /* Micro-interactions */
+  @keyframes pulse-soft {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-in-up {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Mobile-specific enhancements */
+  @media (max-width: 768px) {
+    /* Stronger card shadows on mobile for depth */
+    .shadow-lg {
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .shadow-xl {
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Better spacing on mobile */
+    .section {
+      @apply py-12;
+    }
+
+    /* Mobile-specific typography */
+    h1 {
+      @apply text-4xl leading-tight;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      @apply text-3xl leading-tight;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      @apply text-xl leading-snug;
+    }
+
+    p {
+      @apply text-base leading-relaxed;
+      line-height: 1.75;
+    }
+
+    /* Improved readability */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Enhanced card hover effects on mobile (for touch) */
+    .hover\:shadow-xl:active {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Tap highlight color */
+    * {
+      -webkit-tap-highlight-color: rgba(116, 164, 188, 0.2);
+    }
+
+    /* Better button/link touch targets */
+    a, button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* Swipeable cards container */
+  .swipeable-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .swipeable-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .swipeable-card {
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  /* Scroll indicators */
+  .scroll-indicator {
+    position: relative;
+  }
+
+  .scroll-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(116, 164, 188, 0.5), transparent);
+    border-radius: 2px;
+  }
 }
+
 
