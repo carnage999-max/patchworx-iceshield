@@ -41,9 +41,9 @@ export default function Home() {
             <Image
               src="/patchworx-ice-logo.png"
               alt="Patchworx IceShield"
-              width={100}
-              height={100}
-              className="w-24 h-24 rounded-3xl shadow-2xl hover:shadow-xl hover:scale-105 transition-all duration-300"
+              width={400}
+              height={400}
+              className="w-50 h-50 lg:w-48 lg:h-48 rounded-3xl shadow-2xl hover:shadow-xl hover:scale-105 transition-all duration-300"
               priority
             />
           </div>
