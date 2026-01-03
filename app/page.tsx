@@ -1,25 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import type { Metadata } from "next";
 import { Snowflake, Droplet, Check, X } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-export const metadata: Metadata = {
-  title: "Patchworx IceShield® | Salt-Free Winter Road Safety System",
-  description: "Salt is destroying roads, vehicles, and waterways. IceShield® replaces salt with a salt-free winter road safety system.",
-  keywords: ["winter roads", "ice treatment", "salt-free de-icing", "winter maintenance", "road safety", "IceShield"],
-  openGraph: {
-    title: "Patchworx IceShield® | Salt-Free Winter Road Safety System",
-    description: "Salt is destroying roads, vehicles, and waterways. IceShield® replaces salt with a salt-free winter road safety system.",
-    images: [
-      {
-        url: "https://patchworx-ice.com/patchworx-ice-logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Patchworx IceShield",
-      },
-    ],
-  },
-};
+function ScrollSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${
+        isVisible
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-8'
+      } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -91,118 +93,138 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Why Salt Is Failing</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Why Salt Is Failing</h2>
+            </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {/* Corrosion */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
-                <Droplet className="w-8 h-8 text-red-500" />
+            <ScrollSection delay={0}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
+                  <Droplet className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-arctic-navy mb-4">Corrosion</h3>
+                <ul className="space-y-3 text-infrastructure-blue">
+                  <li>• Destroys vehicles and infrastructure</li>
+                  <li>• Creates hidden long-term costs</li>
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold text-arctic-navy mb-4">Corrosion</h3>
-              <ul className="space-y-3 text-infrastructure-blue">
-                <li>• Destroys vehicles and infrastructure</li>
-                <li>• Creates hidden long-term costs</li>
-              </ul>
-            </div>
+            </ScrollSection>
 
             {/* Cold Failure */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
-                <Snowflake className="w-8 h-8 text-blue-500" />
+            <ScrollSection delay={100}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6">
+                  <Snowflake className="w-8 h-8 text-blue-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-arctic-navy mb-4">Cold Failure</h3>
+                <ul className="space-y-3 text-infrastructure-blue">
+                  <li>• Loses effectiveness in extreme cold</li>
+                  <li>• Leads to black ice and refreeze</li>
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold text-arctic-navy mb-4">Cold Failure</h3>
-              <ul className="space-y-3 text-infrastructure-blue">
-                <li>• Loses effectiveness in extreme cold</li>
-                <li>• Leads to black ice and refreeze</li>
-              </ul>
-            </div>
+            </ScrollSection>
 
             {/* Environmental Harm */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6">
-                <Droplet className="w-8 h-8 text-green-500" />
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6">
+                  <Droplet className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-arctic-navy mb-4">Environmental Harm</h3>
+                <ul className="space-y-3 text-infrastructure-blue">
+                  <li>• Chloride runoff contaminates water and soil</li>
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold text-arctic-navy mb-4">Environmental Harm</h3>
-              <ul className="space-y-3 text-infrastructure-blue">
-                <li>• Chloride runoff contaminates water and soil</li>
-              </ul>
-            </div>
+            </ScrollSection>
           </div>
 
-          <div className="text-center fade-in-up fade-in-delay-300">
-            <p className="text-3xl lg:text-4xl font-bold text-frost-blue">
-              The problem is not winter — it is salt.
-            </p>
-          </div>
+          <ScrollSection delay={300}>
+            <div className="text-center">
+              <p className="text-3xl lg:text-4xl font-bold text-frost-blue">
+                The problem is not winter — it is salt.
+              </p>
+            </div>
+          </ScrollSection>
         </div>
       </section>
 
       {/* 3. The Insight — Melting Ice Is the Wrong Goal */}
       <section id="insight" className="bg-snow-white py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Melting Ice Is the Wrong Goal</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Melting Ice Is the Wrong Goal</h2>
+            </div>
+          </ScrollSection>
 
           {/* Visual Comparison */}
-          <div className="max-w-4xl mx-auto mb-12 fade-in-up fade-in-delay-100">
-            <div className="bg-white p-8 lg:p-10 rounded-3xl shadow-2xl hover:shadow-xl transition-all duration-300">
-              <Image
-                src="/salt-vs-iceshield.png"
-                alt="Salt vs IceShield comparison"
-                width={1200}
-                height={600}
-                className="w-full h-auto rounded-2xl"
-              />
+          <ScrollSection delay={100}>
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="bg-white p-8 lg:p-10 rounded-3xl shadow-2xl hover:shadow-xl transition-all duration-300">
+                <Image
+                  src="/salt-vs-iceshield.png"
+                  alt="Salt vs IceShield comparison"
+                  width={1200}
+                  height={600}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
             </div>
-          </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
             {/* Traditional Salt */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-red-500/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <div className="flex items-center gap-3 mb-6">
-                <X className="w-8 h-8 text-red-500" />
-                <h3 className="text-2xl font-bold text-arctic-navy">Traditional Salt</h3>
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-red-500/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <X className="w-8 h-8 text-red-500" />
+                  <h3 className="text-2xl font-bold text-arctic-navy">Traditional Salt</h3>
+                </div>
+                <p className="text-infrastructure-blue text-lg leading-relaxed">
+                  Salt reacts <strong>after</strong> ice forms.
+                </p>
               </div>
-              <p className="text-infrastructure-blue text-lg leading-relaxed">
-                Salt reacts <strong>after</strong> ice forms.
-              </p>
-            </div>
+            </ScrollSection>
 
             {/* IceShield */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-iceshield-blue hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-300">
-              <div className="flex items-center gap-3 mb-6">
-                <Check className="w-8 h-8 text-iceshield-blue" />
-                <h3 className="text-2xl font-bold text-arctic-navy">IceShield®</h3>
+            <ScrollSection delay={300}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-iceshield-blue hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <Check className="w-8 h-8 text-iceshield-blue" />
+                  <h3 className="text-2xl font-bold text-arctic-navy">IceShield®</h3>
+                </div>
+                <p className="text-infrastructure-blue text-lg leading-relaxed">
+                  IceShield® <strong>prevents</strong> ice from bonding to pavement.
+                </p>
               </div>
-              <p className="text-infrastructure-blue text-lg leading-relaxed">
-                IceShield® <strong>prevents</strong> ice from bonding to pavement.
-              </p>
-            </div>
+            </ScrollSection>
           </div>
 
           {/* The Science */}
-          <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-5xl mx-auto fade-in-up fade-in-delay-400">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div className="bg-white p-6 rounded-2xl shadow-xl">
-                <Image
-                  src="/ice-cannot-adhere.png"
-                  alt="Ice slides off treated pavement - cannot bond to surface"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto rounded-xl"
-                />
-              </div>
-              <div className="text-center lg:text-left">
-                <p className="text-white text-2xl lg:text-3xl font-bold leading-relaxed">
-                  Non-bonded ice slides off the surface, making it easier to plow and less likely to refreeze.
-                </p>
+          <ScrollSection delay={400}>
+            <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="bg-white p-6 rounded-2xl shadow-xl">
+                  <Image
+                    src="/ice-cannot-adhere.png"
+                    alt="Ice slides off treated pavement - cannot bond to surface"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto rounded-xl"
+                  />
+                </div>
+                <div className="text-center lg:text-left">
+                  <p className="text-white text-2xl lg:text-3xl font-bold leading-relaxed">
+                    Non-bonded ice slides off the surface, making it easier to plow and less likely to refreeze.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollSection>
         </div>
       </section>
 
@@ -216,116 +238,136 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">How IceShield Works</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">How IceShield Works</h2>
+            </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {/* Anti-Adhesion Treatment */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
-                1
+            <ScrollSection delay={0}>
+              <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
+                  1
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Anti-Adhesion Treatment</h3>
+                <p className="text-infrastructure-blue text-sm leading-relaxed">
+                  Penetrating surface treatment that alters surface energy, preventing ice from bonding to pavement.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Anti-Adhesion Treatment</h3>
-              <p className="text-infrastructure-blue text-sm leading-relaxed">
-                Penetrating surface treatment that alters surface energy, preventing ice from bonding to pavement.
-              </p>
-            </div>
+            </ScrollSection>
 
             {/* Engineered Traction Grit */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
-                2
+            <ScrollSection delay={100}>
+              <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
+                  2
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Engineered Traction Grit</h3>
+                <p className="text-infrastructure-blue text-sm leading-relaxed">
+                  Provides mechanical traction with lower application volumes than traditional methods.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Engineered Traction Grit</h3>
-              <p className="text-infrastructure-blue text-sm leading-relaxed">
-                Provides mechanical traction with lower application volumes than traditional methods.
-              </p>
-            </div>
+            </ScrollSection>
 
             {/* Standard Operations */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
-                3
+            <ScrollSection delay={200}>
+              <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-iceshield-blue rounded-2xl flex items-center justify-center text-white text-xl font-bold mb-6 shadow-lg">
+                  3
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Standard Operations</h3>
+                <p className="text-infrastructure-blue text-sm leading-relaxed">
+                  No new equipment required—integrates seamlessly with existing fleet and operations.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Standard Operations</h3>
-              <p className="text-infrastructure-blue text-sm leading-relaxed">
-                No new equipment required—integrates seamlessly with existing fleet and operations.
-              </p>
-            </div>
+            </ScrollSection>
           </div>
 
           {/* Application visual with context */}
-          <div className="bg-white/5 backdrop-blur-sm p-8 lg:p-12 rounded-3xl border border-white/10 fade-in-up fade-in-delay-300">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">Application in Action</h3>
-                <p className="text-frost-blue text-lg leading-relaxed mb-6">
-                  IceShield® is applied using your existing tanker equipment. The treatment penetrates the pavement surface, creating a protective barrier that prevents ice adhesion throughout the winter season.
-                </p>
-                <ul className="space-y-3 text-frost-blue">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
-                    <span>Applied before the first snow</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
-                    <span>Lasts the entire winter season</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
-                    <span>Works at all temperatures</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-2xl">
-                <Image
-                  src="/tanker-spraying-floor-with-ice-shield.png"
-                  alt="IceShield application using standard tanker equipment"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto rounded-xl"
-                />
+          <ScrollSection delay={300}>
+            <div className="bg-white/5 backdrop-blur-sm p-8 lg:p-12 rounded-3xl border border-white/10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">Application in Action</h3>
+                  <p className="text-frost-blue text-lg leading-relaxed mb-6">
+                    IceShield® is applied using your existing tanker equipment. The treatment penetrates the pavement surface, creating a protective barrier that prevents ice adhesion throughout the winter season.
+                  </p>
+                  <ul className="space-y-3 text-frost-blue">
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Applied before the first snow</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Lasts the entire winter season</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Works at all temperatures</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-white p-6 rounded-2xl shadow-2xl">
+                  <Image
+                    src="/tanker-spraying-floor-with-ice-shield.png"
+                    alt="IceShield application using standard tanker equipment"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto rounded-xl"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollSection>
         </div>
       </section>
 
       {/* 5. Safety Impact — Reducing Accidents */}
       <section id="safety" className="bg-snow-white py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Safety Impact — Reducing Accidents</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Safety Impact — Reducing Accidents</h2>
+            </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Reduced bonded ice duration</h3>
-            </div>
+            <ScrollSection delay={0}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Reduced bonded ice duration</h3>
+              </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Faster traction recovery</h3>
-            </div>
+            <ScrollSection delay={100}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Faster traction recovery</h3>
+              </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Uniform friction</h3>
-            </div>
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Uniform friction</h3>
+              </div>
+            </ScrollSection>
           </div>
 
-          <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-4xl mx-auto hover:shadow-xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-300">
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">Expected Outcomes</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white text-lg">
-              <div className="flex items-center gap-3">
-                <Check className="w-6 h-6 flex-shrink-0" />
-                <span>15–30% crash reduction overall</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Check className="w-6 h-6 flex-shrink-0" />
-                <span>30–50% reduction in high-risk areas</span>
+          <ScrollSection delay={300}>
+            <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-4xl mx-auto hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">Expected Outcomes</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white text-lg">
+                <div className="flex items-center gap-3">
+                  <Check className="w-6 h-6 flex-shrink-0" />
+                  <span>15–30% crash reduction overall</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Check className="w-6 h-6 flex-shrink-0" />
+                  <span>30–50% reduction in high-risk areas</span>
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollSection>
         </div>
       </section>
 
@@ -339,45 +381,53 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Cleanup &amp; Cost — What Happens in the Spring</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Cleanup &amp; Cost — What Happens in the Spring</h2>
+            </div>
+          </ScrollSection>
 
           {/* Grit reuse visual */}
-          <div className="max-w-3xl mx-auto mb-12 fade-in-up fade-in-delay-100">
-            <div className="bg-white p-8 rounded-3xl shadow-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <Image
-                src="/grit-cleanup-and-reuse.png"
-                alt="Grit cleanup and reuse system"
-                width={800}
-                height={500}
-                className="w-full h-auto rounded-2xl"
-              />
+          <ScrollSection delay={100}>
+            <div className="max-w-3xl mx-auto mb-12">
+              <div className="bg-white p-8 rounded-3xl shadow-2xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <Image
+                  src="/grit-cleanup-and-reuse.png"
+                  alt="Grit cleanup and reuse system"
+                  width={800}
+                  height={500}
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
             </div>
-          </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {/* Traditional Salt */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <div className="flex items-center gap-3 mb-6">
-                <X className="w-8 h-8 text-red-500" />
-                <h3 className="text-2xl font-bold text-arctic-navy">Traditional Salt</h3>
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <X className="w-8 h-8 text-red-500" />
+                  <h3 className="text-2xl font-bold text-arctic-navy">Traditional Salt</h3>
+                </div>
+                <p className="text-infrastructure-blue text-lg leading-relaxed">
+                  Creates sludge and cleanup costs.
+                </p>
               </div>
-              <p className="text-infrastructure-blue text-lg leading-relaxed">
-                Creates sludge and cleanup costs.
-              </p>
-            </div>
+            </ScrollSection>
 
             {/* IceShield */}
-            <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-iceshield-blue hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-300">
-              <div className="flex items-center gap-3 mb-6">
-                <Check className="w-8 h-8 text-iceshield-blue" />
-                <h3 className="text-2xl font-bold text-arctic-navy">IceShield®</h3>
+            <ScrollSection delay={300}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl border-2 border-iceshield-blue hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <Check className="w-8 h-8 text-iceshield-blue" />
+                  <h3 className="text-2xl font-bold text-arctic-navy">IceShield®</h3>
+                </div>
+                <p className="text-infrastructure-blue text-lg leading-relaxed">
+                  Uses dry, inert material with reduced sweeping needs.
+                </p>
               </div>
-              <p className="text-infrastructure-blue text-lg leading-relaxed">
-                Uses dry, inert material with reduced sweeping needs.
-              </p>
-            </div>
+            </ScrollSection>
           </div>
         </div>
       </section>
@@ -385,31 +435,39 @@ export default function Home() {
       {/* 7. Environmental & Climate Alignment */}
       <section id="environmental" className="bg-snow-white py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Environmental &amp; Climate Alignment</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Environmental &amp; Climate Alignment</h2>
+            </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                <Check className="w-8 h-8 text-green-500" />
+            <ScrollSection delay={0}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                  <Check className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Zero chloride runoff</h3>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Zero chloride runoff</h3>
-            </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                <Check className="w-8 h-8 text-green-500" />
+            <ScrollSection delay={100}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                  <Check className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Protects waterways</h3>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Protects waterways</h3>
-            </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                <Check className="w-8 h-8 text-green-500" />
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                  <Check className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Supports climate resilience goals</h3>
               </div>
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Supports climate resilience goals</h3>
-            </div>
+            </ScrollSection>
           </div>
         </div>
       </section>
@@ -424,45 +482,84 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Pilot Program — Start Small, Prove It</h2>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Pilot Program — Start Small, Prove It</h2>
+            </div>
+          </ScrollSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <ScrollSection delay={0}>
+              <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-3xl font-bold text-iceshield-blue mb-3">5–10 mile pilots</h3>
+              </div>
+            </ScrollSection>
+
+            <ScrollSection delay={100}>
+              <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-3xl font-bold text-iceshield-blue mb-3">Control vs treated sections</h3>
+              </div>
+            </ScrollSection>
+
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-3xl font-bold text-iceshield-blue mb-3">One winter season minimum</h3>
+              </div>
+            </ScrollSection>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <h3 className="text-3xl font-bold text-iceshield-blue mb-3">5–10 mile pilots</h3>
+          {/* Real-World Application - Residential */}
+          <ScrollSection delay={300}>
+            <div className="bg-white/5 backdrop-blur-sm p-8 lg:p-12 rounded-3xl border border-white/10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="bg-white p-6 rounded-2xl shadow-2xl">
+                  <Image
+                    src="/man-spraying-driveway-with-iceshield.png"
+                    alt="Homeowner applying IceShield to residential driveway"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto rounded-xl"
+                  />
+                </div>
+                <div className="text-center lg:text-left">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">Beyond Municipal Roads</h3>
+                  <p className="text-frost-blue text-lg leading-relaxed">
+                    IceShield® works on driveways, parking lots, sidewalks, and any paved surface. Homeowners and businesses can benefit from the same salt-free protection proven in municipal pilots.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <h3 className="text-3xl font-bold text-iceshield-blue mb-3">Control vs treated sections</h3>
-            </div>
-
-            <div className="bg-white p-10 rounded-2xl shadow-2xl text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <h3 className="text-3xl font-bold text-iceshield-blue mb-3">One winter season minimum</h3>
-            </div>
-          </div>
+          </ScrollSection>
         </div>
       </section>
 
       {/* 9. Scalability — From Pilot to Standard */}
       <section id="scalability" className="bg-snow-white py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Scalability — From Pilot to Standard</h2>
-          </div>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy mb-6">Scalability — From Pilot to Standard</h2>
+            </div>
+          </ScrollSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Municipal to statewide rollout</h3>
-            </div>
+            <ScrollSection delay={0}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Municipal to statewide rollout</h3>
+              </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Compatible with existing pavement</h3>
-            </div>
+            <ScrollSection delay={100}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Compatible with existing pavement</h3>
+              </div>
+            </ScrollSection>
 
-            <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-200">
-              <h3 className="text-xl font-bold text-arctic-navy mb-3">Licensable system</h3>
-            </div>
+            <ScrollSection delay={200}>
+              <div className="bg-white p-10 rounded-2xl shadow-xl text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl font-bold text-arctic-navy mb-3">Licensable system</h3>
+              </div>
+            </ScrollSection>
           </div>
         </div>
       </section>
@@ -477,40 +574,83 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Patchworx Integration</h2>
-          </div>
-
-          <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-4xl mx-auto text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 fade-in-up fade-in-delay-100">
-            <div className="space-y-6 text-white text-xl lg:text-2xl font-semibold">
-              <p>Repair + seal + winter protection</p>
-              <p className="text-3xl lg:text-4xl font-bold">Year-round pavement value</p>
+          <ScrollSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">Patchworx Integration</h2>
             </div>
-          </div>
+          </ScrollSection>
+
+          <ScrollSection delay={100}>
+            <div className="bg-gradient-to-br from-iceshield-blue to-frost-blue p-10 lg:p-12 rounded-3xl shadow-2xl max-w-4xl mx-auto text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-12">
+              <div className="space-y-6 text-white text-xl lg:text-2xl font-semibold">
+                <p>Repair + seal + winter protection</p>
+                <p className="text-3xl lg:text-4xl font-bold">Year-round pavement value</p>
+              </div>
+            </div>
+          </ScrollSection>
+
+          {/* Product Availability */}
+          <ScrollSection delay={200}>
+            <div className="bg-white/5 backdrop-blur-sm p-8 lg:p-12 rounded-3xl border border-white/10 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="text-center lg:text-left order-2 lg:order-1">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">Accessible & Scalable</h3>
+                  <p className="text-frost-blue text-lg leading-relaxed mb-6">
+                    IceShield® is available for municipalities, businesses, and residential customers. From retail to bulk delivery, we ensure the product reaches where it's needed most.
+                  </p>
+                  <ul className="space-y-3 text-frost-blue">
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Retail and commercial availability</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Bulk municipal delivery</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-iceshield-blue flex-shrink-0 mt-1" />
+                      <span>Technical support and training</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-white p-6 rounded-2xl shadow-2xl order-1 lg:order-2">
+                  <Image
+                    src="/ice-shield-on-store-shelves.png"
+                    alt="IceShield products available on retail shelves"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto rounded-xl"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollSection>
         </div>
       </section>
 
       {/* 11. Final Call to Action */}
       <section id="cta" className="bg-gradient-to-b from-snow-white to-frost-blue/10 py-20 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <div className="space-y-8 fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy">Ready to Transform Your Winter Strategy?</h2>
+          <ScrollSection>
+            <div className="space-y-8">
+              <h2 className="text-4xl lg:text-5xl font-bold text-arctic-navy">Ready to Transform Your Winter Strategy?</h2>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-8 fade-in-up fade-in-delay-100">
-              <Link
-                href="/contact"
-                className="bg-iceshield-blue text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-iceshield-blue/90 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-              >
-                Request a Pilot
-              </Link>
-              <Link
-                href="/contact"
-                className="bg-white/90 backdrop-blur-sm text-arctic-navy px-8 py-3.5 rounded-full font-semibold text-base hover:bg-white active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg border border-arctic-navy/10"
-              >
-                Speak With an Engineer
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-8">
+                <Link
+                  href="/contact"
+                  className="bg-iceshield-blue text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-iceshield-blue/90 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  Request a Pilot
+                </Link>
+                <Link
+                  href="/contact"
+                  className="bg-white/90 backdrop-blur-sm text-arctic-navy px-8 py-3.5 rounded-full font-semibold text-base hover:bg-white active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg border border-arctic-navy/10"
+                >
+                  Speak With an Engineer
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollSection>
         </div>
       </section>
     </main>

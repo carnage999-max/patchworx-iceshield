@@ -160,16 +160,21 @@ export default function Contact() {
                   <p>
                     <strong className="text-arctic-navy">Email:</strong>
                     <br />
-                    <a href="mailto:pilots@patchworx.com" className="hover:text-iceshield-blue transition-colors">
-                      pilots@patchworx.com
+                    <a href="mailto:info@patchworx.com" className="hover:text-iceshield-blue transition-colors">
+                      info@patchworx.com
                     </a>
                   </p>
                   <p>
                     <strong className="text-arctic-navy">Phone:</strong>
                     <br />
-                    <a href="tel:+16045551234" className="hover:text-iceshield-blue transition-colors">
-                      +1 (604) 555-1234
+                    <a href="tel:+12079471999" className="hover:text-iceshield-blue transition-colors">
+                      207-947-1999
                     </a>
+                  </p>
+                  <p>
+                    <strong className="text-arctic-navy">Address:</strong>
+                    <br />
+                    <span>PO Box 52<br />Detroit, ME 04929</span>
                   </p>
                 </div>
               </div>
