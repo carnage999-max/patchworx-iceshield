@@ -29,7 +29,7 @@ export default function Contact() {
     setError("");
 
     try {
-      const response = await fetch("https://formspree.io/f/mgvnzqdp", {
+      const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,9 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", municipality: "", roadMiles: "", message: "" });
         // Reset success message after 5 seconds
