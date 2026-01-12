@@ -13,6 +13,8 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -21,15 +23,35 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, this would send data to your backend
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", municipality: "", roadMiles: "", message: "" });
-    }, 3000);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      const response = await fetch("https://formspree.io/f/mgvnzqdp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", municipality: "", roadMiles: "", message: "" });
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
+      } else {
+        setError("Something went wrong. Please try again or contact us directly.");
+      }
+    } catch (err) {
+      setError("Unable to send message. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,7 +99,13 @@ export default function Contact() {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <>
+                    {error && (
+                      <div className="bg-red-50 border-2 border-red-200 text-red-700 p-4 rounded-xl mb-6">
+                        <p className="font-semibold">{error}</p>
+                      </div>
+                    )}
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label className="block text-arctic-navy font-semibold mb-2">Name</label>
                       <input
@@ -143,11 +171,13 @@ export default function Contact() {
 
                     <button
                       type="submit"
-                      className="w-full bg-iceshield-blue text-white py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+                      disabled={isSubmitting}
+                      className="w-full bg-iceshield-blue text-white py-4 rounded-xl font-semibold hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Submit Pilot Request
+                      {isSubmitting ? "Sending..." : "Submit Pilot Request"}
                     </button>
                   </form>
+                  </>
                 )}
               </div>
             </div>
