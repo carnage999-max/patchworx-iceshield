@@ -105,6 +105,18 @@ export default function Footer() {
             Engineered for cold. Built to last.
           </p>
         </div>
+        <p className="mt-4 text-center text-xs text-infrastructure-blue/60">
+          Part of the{" "}
+          <a
+            href="https://se7eninc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-iceshield-blue transition-colors underline"
+          >
+            Se7en
+          </a>{" "}
+          family of companies.
+        </p>
       </div>
     </footer>
   );
